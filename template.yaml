@@ -10,6 +10,19 @@ Globals:
   Function:
     Timeout: 3
 
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: dice-roller
+    Description: A simple serverless dice rolling API
+    Author: madcap
+    SpdxLicenseId: MIT
+    LicenseUrl: LICENSE.txt
+    ReadmeUrl: README.md
+    Labels: []
+    HomePageUrl: https://github.com/madcap/serverless-dice-roller
+    SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/madcap/serverless-dice-roller
+
 Resources:
   DiceRollerFunction:
     Type: AWS::Serverless::Function
