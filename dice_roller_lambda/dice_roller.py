@@ -4,6 +4,8 @@ import json
 
 DICE_ROLL_PATTERN = re.compile("^[0-9]*d[0-9]+")
 MAX = 512
+QUERY_PARAMETER = 'diceRoll'
+USAGE = '  usage: GET {url}?' + QUERY_PARAMETER + '=1d20'
 
 
 def invalid_dice_roll(message):
@@ -12,7 +14,7 @@ def invalid_dice_roll(message):
         'headers': {
             "Access-Control-Allow-Origin": "*"
         },
-        'body': message
+        'body': message + USAGE
     }
 
 
@@ -20,19 +22,23 @@ def lambda_handler(event, context):
     
     if 'queryStringParameters' not in event:
         return invalid_dice_roll('event format not recognized')
-    
-    if 'diceRoll' not in event['queryStringParameters']:
-        return invalid_dice_roll('diceRoll not defined')
 
-    dice_roll = event['queryStringParameters']['diceRoll']
+    # happens when there is no query parameters, causes difficult to diagnose http status 502 with internal server error message
+    if event['queryStringParameters'] == None:
+        return invalid_dice_roll(f'required query parameter {QUERY_PARAMETER} is missing')
+
+    if QUERY_PARAMETER not in event['queryStringParameters']:
+        return invalid_dice_roll(f'required query parameter {QUERY_PARAMETER} is missing')
+
+    dice_roll = event['queryStringParameters'][QUERY_PARAMETER]
 
     if not isinstance(dice_roll, str):
-        return invalid_dice_roll('diceRoll is not a string')
+        return invalid_dice_roll(f'query parameter {QUERY_PARAMETER} is not a string')
 
     dice_roll = dice_roll.lower()
 
     if not DICE_ROLL_PATTERN.match(dice_roll):
-        return invalid_dice_roll('diceRoll does not match <COUNT>d<SIDES> or d<SIDES>')
+        return invalid_dice_roll(f'query parameter {QUERY_PARAMETER} does not match <COUNT>d<SIDES> or d<SIDES>')
 
     split = dice_roll.split('d')
     if split[0] == '':

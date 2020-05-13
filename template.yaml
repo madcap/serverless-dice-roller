@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   serverless-dice-roller
   A simple serverless dice rolling API
-  usage: .../dice_roller?diceRoll=1d10
+  usage: .../roll?diceRoll=1d10
   code: https://github.com/madcap/serverless-dice-roller
 
 Globals:
@@ -21,13 +21,13 @@ Resources:
         DiceRoller:
           Type: Api
           Properties:
-            Path: /dice_roller
+            Path: /roll
             Method: get
 
 Outputs:
   DiceRollerApi:
     Description: "API Gateway endpoint URL for Prod stage for Dice Roller function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/dice_roller/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/roll/"
   DiceRollerFunction:
     Description: "Dice Roller Lambda Function ARN"
     Value: !GetAtt DiceRollerFunction.Arn
