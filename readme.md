@@ -9,4 +9,4 @@ Build: `sam build`
 
 Deploy: `sam --guided`
 
-Usage: .../dice_roller?diceRoll=1d20
+Usage: GET .../dice_roller?diceRoll=1d20
