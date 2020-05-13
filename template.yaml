@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   serverless-dice-roller
   A simple serverless dice rolling API
-  usage: .../roll?diceRoll=1d10
+  usage: {url}/roll?diceRoll=1d10
   code: https://github.com/madcap/serverless-dice-roller
 
 Globals:
